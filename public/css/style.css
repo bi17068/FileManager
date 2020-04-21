@@ -88,8 +88,8 @@ h1 {
   position: absolute;
   font-weight: 900;
   font-size: 25px;
-  left: 30px;
-  top: 10px;
+  left: 50px;
+  top: 15px;
 }
 
 /* header ================================ */
@@ -174,5 +174,12 @@ header {
 }
 /* sidebar ================================ */
 .sidebar {
-  background-color: aqua;
+  width: 20%;
+  height: 1000px;
+  float: left;
+  background-color: #666666;
+  color: black;
+  border-bottom: 1px solid #cc7686;
+  z-index: 1;
+  font-size: large;
 }
