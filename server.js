@@ -2,6 +2,8 @@
 const path = require('path');
 const express = require('express');
 const multer = require('multer');
+const calc = require('./lib/calc.js')
+const auth = require('./lib/auth');
 
 const app = express();
 const port = 8000;
@@ -13,15 +15,17 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
       cb(null, file.originalname);
     }
-})
-  
+});
+
 // const upload = multer({ dest: 'uploads/' })
 const upload = multer({ storage: storage });
 
 app.use(express.static('public'));
+app.use(auth);
 
 app.get('/', (req, res) => {
-  res.render('index.ejs')
+  calc.ranking();// このブロックは実行されているがこのライブラリ出力されない
+  res.render('index.ejs');
 });
 
 app.get('/upload', (req, res) => {
@@ -30,9 +34,15 @@ app.get('/upload', (req, res) => {
 
 app.post('/upload', upload.single('file'), function (req, res) {
     res.send(req.file.originalname + 'ファイルのアップロードが完了しました。');
-})
+});
 
-app.listen(port,function(){
+app.get('/logout', (req, res) => {
+  res.writeHead(401, {'Content-Type': 'text/plain; charset=utf-8'})
+  res.end('ログアウトしました');
+  return;
+});
+
+app.listen(port, function(){
 	console.log(`listening on port ${port}!`);
-})	
+});	
 
