@@ -2,7 +2,7 @@
 const path = require('path');
 const express = require('express');
 const multer = require('multer');
-const calc = require('./lib/calc.js')
+const calc = require('./lib/calc')
 const auth = require('./lib/auth');
 
 const app = express();
@@ -24,7 +24,7 @@ app.use(express.static('public'));
 app.use(auth);
 
 app.get('/', (req, res) => {
-  calc.ranking();// このブロックは実行されているがこのライブラリ出力されない
+  calc.ranking();// このブロックは実行されているが、このライブラリは正常に動作しない
   res.render('index.ejs');
 });
 
@@ -37,9 +37,10 @@ app.post('/upload', upload.single('file'), function (req, res) {
 });
 
 app.get('/logout', (req, res) => {
-  res.writeHead(401, {'Content-Type': 'text/plain; charset=utf-8'})
+  res.writeHead(401, {
+    'Content-Type': 'text/plain; charset=utf-8'
+  });
   res.end('ログアウトしました');
-  return;
 });
 
 app.listen(port, function(){
